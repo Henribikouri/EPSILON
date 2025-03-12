@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Opérations sur l'Automate</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        #addInput {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    
+    <header>
+        <img src="{{ url_for('static', filename='logo/logo.PNG') }}" alt="logo">
+    </header>
+    <main>
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <header>
+                        <h2 class="cent">Choisir une opération</h2>
+                    </header>
+                    <form id="operationForm" action="{{ url_for('execute_action') }}" method="post">
+                        <label for="action">Action:</label>
+                        <select name="action" id="action">
+                            <option value="nature">Nature de l'automate</option>
+                            <option value="eFermeture">e-Fermeture</option>
+                            <option value="decompose">Décomposer un mot</option>
+                            <option value="reconnaitre">Reconnaître un mot</option>
+                            <option value="vers_AFN">Vers l'AFN</option>
+                            <option value="vers_AFD">Vers l'AFD</option>
+                            <option value="vers_AFC">Vers l'AFC</option>
+                            <option value="vers_automate_canonique">Vers l'automate canonique</option>
+                        </select>
+                        <div id="inputs">
+                            <!-- Additional inputs will be injected here -->
+                        </div>
+                        <button type="button" id="addInput">Ajouter un mot</button>
+                        <button type="submit">Exécuter</button>
+                    </form>
+                    <div id="result">
+                        <!-- Result will be displayed here -->
+                    </div>
+                    <a href="{{ url_for('index') }}">Changer d'automate</a>
+                </div>
+                <div class="col">
+                    <div class="ceil">
+                        <header>
+                            <h2>Alphabet</h2>
+                        </header>
+                        <div class="content">
+                            <p>{{ automate.alphabet }}</p>
+                        </div>
+                    </div>
+                    <div class="ceil">
+                        <header>
+                            <h2>États</h2>
+                        </header>
+                        <div class="content">
+                            <p>{{ automate.etats }}</p>
+                        </div>
+                    </div>
+                    <div class="ceil">
+                        <header>
+                            <h2>États initiaux</h2>
+                        </header>
+                        <div class="content">
+                            <p>{{ automate.etats_initiaux }}</p>
+                        </div>
+                    </div>
+                    <div class="ceil">
+                        <header>
+                            <h2>États finaux</h2>
+                        </header>
+                        <div class="content">
+                            <p>{{ automate.etats_finaux }}</p>
+                        </div>
+                    </div>
+                    <div class="ceil">
+                        <header>
+                            <h2>Table de transition</h2>
+                        </header>
+                        <div class="content" id="transitions">
+                            {% for transition in automate.table_de_transition %}
+                                <div class="transition">
+                                    ({{ transition.origines }}, {{ transition.lettre }}, {{ transition.destinations }})
+                                </div>
+                            {% endfor %}
+                            <!-- Vous pouvez ajouter d'autres transitions ici -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <script src="{{ url_for('static', filename='js/operation.js') }}"></script>
+</body>
+</html>

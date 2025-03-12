@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Opérations sur l'Automate</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        #addInput {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    
+    <header>
+        <img src="{{ url_for('static', filename='logo/logo.PNG') }}" alt="logo">
+    </header>
+    <main>
+        <div class="title">
+            <h2></h2>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    
+                    <header>
+                        <h2>Résultat de l'opération</h2>
+                    </header>
+    
+                    {% if action == 'nature' %}
+                        <p><strong>Nature de l'automate</strong> : {{ result }}</p>
+                    {% elif action == 'eFermeture' %}
+                        <p><strong>e-Fermeture</strong> : {{ result }}</p>
+                    {% elif action == 'decompose' %}
+                        <p><strong>Décomposition du mot</strong> : {{ result }}</p>
+                    {% elif action == 'reconnaitre' %}
+                        <p><strong>Reconnaissance des mots</strong> : </p>
+                        <ul>
+                            {% for mot, reconnu in result.items() %}
+                                <li>{{ mot }} : {% if reconnu %}Reconnu{% else %}Non reconnu{% endif %}</li>
+                            {% endfor %}
+                        </ul>
+                    {% else %}
+                        {% if action == 'vers_AFN'  %}
+                            <p><strong>Conversion vers AFN</strong> : </p>
+                        {% elif action == 'vers_AFD' %}
+                            <p><strong>Conversion vers AFD</strong> : </p>
+                        {% elif action == 'vers_AFC' %}
+                            <p><strong>Conversion vers AFC</strong> : </p>
+                        {% elif action == 'vers_automate_canonique' %}
+                            <p><strong>Conversion vers automate canonique</strong> : </p>
+                        {% else %}
+                            <p>Action non reconnue</p>
+                        {% endif %}
+                
+                        <div class="automate">
+                            <div class="automate-content">
+                                <h3>Alphabet</h3>
+                                <p>{{ automate.alphabet }}</p>
+                                
+                                <h3>États</h3>
+                                <p>{{ automate.etats }}</p>
+                                
+                                <h3>États initiaux</h3>
+                                <p>{{ automate.etats_initiaux }}</p>
+                                
+                                <h3>États finaux</h3>
+                                <p>{{ automate.etats_finaux }}</p>
+                                
+                                <h3>Table de transition</h3>
+                                <ul>
+                                    {% for transition in automate.table_de_transition %}
+                                        <li>({{ transition.origines }}, {{ transition.lettre }}, {{ transition.destinations }})</li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+                        
+                    {% endif %}
+                    <a href="{{ url_for('operations') }}">Retour aux opérations</a>                    
+                </div>
+                <div class="col">
+                    
+                    <div class="title">
+                        <h2>Votre automate</h2>
+                    </div>
+                    <div class="ceil">
+                        <header>
+                            <h2>Alphabet</h2>
+                        </header>
+                        <div class="content">
+                            <p>{{ automate.alphabet }}</p>
+                        </div>
+                    </div>
+                    <div class="ceil">
+                        <header>
+                            <h2>États</h2>
+                        </header>
+                        <div class="content">
+                            <p>{{ automate.etats }}</p>
+                        </div>
+                    </div>
+                    <div class="ceil">
+                        <header>
+                            <h2>États initiaux</h2>
+                        </header>
+                        <div class="content">
+                            <p>{{ automate.etats_initiaux }}</p>
+                        </div>
+                    </div>
+                    <div class="ceil">
+                        <header>
+                            <h2>États finaux</h2>
+                        </header>
+                        <div class="content">
+                            <p>{{ automate.etats_finaux }}</p>
+                        </div>
+                    </div>
+                    <div class="ceil">
+                        <header>
+                            <h2>Table de transition</h2>
+                        </header>
+                        <div class="content" id="transitions">
+                            {% for transition in automate.table_de_transition %}
+                                <div class="transition">
+                                    ({{ transition.origines }}, {{ transition.lettre }}, {{ transition.destinations }})
+                                </div>
+                            {% endfor %}
+                            <!-- Vous pouvez ajouter d'autres transitions ici -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <script src="{{ url_for('static', filename='js/operation.js') }}"></script>
+</body>
+</html>

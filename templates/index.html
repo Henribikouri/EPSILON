@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Automate Test</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <header>
+        <img src="{{ url_for('static', filename='logo/logo.PNG') }}" alt="logo">
+    </header>
+    <main>
+        <div class="title">
+            <h2>Définissez les paramètres de votre automate</h2>
+        </div>
+        <div class="container">
+            <form action="{{ url_for('create_automate') }}" method="post">
+                <div class="row">
+                    <div class="col">
+                        <div class="ceil">
+                            <header>
+                                <h2>Alphabet</h2>
+                                <p>Entrez les l'alphabet séparé par des espaces</p>
+                            </header>
+                            <div class="content">
+                                <input type="text" name="alphabet" id="alphabet" required>
+                            </div>
+                        </div>
+                        <div class="ceil">
+                            <header>
+                                <h2>États</h2>
+                                <p>Entrez les états de votre automate séparés par des virgules</p>
+                            </header>
+                            <div class="content">
+                                <input type="text" name="etats" id="etats" required>
+                            </div>
+                        </div>
+                        <div class="ceil">
+                            <header>
+                                <h2>États initiaux</h2>
+                                <p>Entrez les états initiaux de votre automate séparés par des virgules</p>
+                            </header>
+                            <div class="content">
+                                <input type="text" name="etats_initiaux" id="etats_initiaux" required>
+                            </div>
+                        </div>
+                        <div class="ceil">
+                            <header>
+                                <h2>États finaux</h2>
+                                <p>Entrez les états finaux de votre automate séparés par des virgules</p>
+                            </header>
+                            <div class="content">
+                                <input type="text" name="etats_finaux" id="etats_finaux" required>
+                            </div>
+                        </div>
+                        <div class="ceil">
+                            <header>
+                                <h2>Table de transition</h2>
+                                <p>Votre table de transition est un ensemble de transition entrée suivant le modèle (origine, lettre, destinations)</p>
+                            </header>
+                            <div class="content" id="transitions">
+                                <div class="transition">
+                                    (
+                                    <input type="text" name="origine[]" placeholder="origine" required>, 
+                                    <input type="text" name="lettre[]" placeholder="lettre" required>, 
+                                    <input type="text" name="destinations[]" placeholder="destinations" required>
+                                    )
+                                    <button type="button" class="delete-btn">❌</button>
+                                </div>
+                                <!-- Vous pouvez ajouter d'autres transitions ici -->
+                            </div>
+                            
+                            <div class="add-transition">
+                                <button type="button" id="add-transition-btn">➕ Ajouter une transition</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button type="submit">Soumettre</button>
+            </form>
+        </div>
+    </main>
+    <script src="{{ url_for('static', filename='js/index.js') }}"></script>
+</body>
+</html>
